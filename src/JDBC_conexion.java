@@ -70,9 +70,61 @@ public class JDBC_conexion {
 
             System.out.println("Tercer registro insertado correctamente");
 
+            // ==============================
+            // CONSULTAR REGISTROS
+            // ==============================
+
+            ResultSet rs =
+                    statement.executeQuery("SELECT * FROM users");
+
+            System.out.println("Lista de usuarios:");
+
+            while (rs.next()) {
+
+                System.out.println(
+                        rs.getInt("id") + " | "
+                        + rs.getString("first_name") + " | "
+                        + rs.getString("last_name") + " | "
+                        + rs.getString("email") + " | "
+                        + rs.getString("password") + " | "
+                        + rs.getString("language_id") 
+                );
+            }
+
+            // ==============================
+            // ACTUALIZAR REGISTRO
+            // ==============================
+
+            String actualizar =
+                    "UPDATE users SET first_name='Carlos Actualizado', last_name='Gomez Gomez', password='0000' "
+                    + "WHERE email='carlos1@gmail.com'";
+
+            int filasActualizadas =
+                    statement.executeUpdate(actualizar);
+
+            if (filasActualizadas > 0) {
+
+                System.out.println("Registro actualizado correctamente");
+            }
+
+            // ==============================
+            // ELIMINAR REGISTRO
+            // ==============================
+
+            String eliminar =
+                    "DELETE FROM users "
+                    + "WHERE email='carlos1@gmail.com'";
+
+            int filasEliminadas =
+                    statement.executeUpdate(eliminar);
+
+            if (filasEliminadas > 0) {
+
+                System.out.println("Registro eliminado correctamente");
+            }
 
             // Cerrar recursos
-           
+            rs.close();
             statement.close();
             conexion.close();
 
